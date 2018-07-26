@@ -55,14 +55,26 @@ class ftams_server
   {
     IPEndPoint clientep = (IPEndPoint)socket.RemoteEndPoint;
     Console.WriteLine("Connected with {0} at port {1}", clientep.Address, clientep.Port);
-    string response = socket_t.receive_stream(socket);
-    Console.WriteLine("Received:");
-    Console.WriteLine(response);
+    string message = socket_t.receive_stream(socket);
+    Console.WriteLine("Server received:");
+    Console.WriteLine(message);
 
-    string reply = "ok";
-    socket_t.send(socket, reply);
-    Console.WriteLine("Sent:");
-    Console.WriteLine(reply);
+    string http = "";
+    http += "HTTP/1.1 200 OK\r\n";
+    http += "Content-Type: text/html\r\n";
+    string response = "<html><body><h1>It works!</h1></body></html>";
+    http += "Content-Length: ";
+    int message_size = response.Length;
+    http += message_size.ToString();
+    http += "\r\n";
+    http += "Connection: close\r\n";
+    //terminate HTTP header
+    http += "\r\n";
+    //add message
+    http += response;
+    socket_t.send(socket, http);
+    Console.WriteLine("Server sent:");
+    Console.WriteLine(http);
   }
 
 }

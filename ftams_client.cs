@@ -115,7 +115,8 @@ class ftams_client
       http += message_size.ToString();
       http += "\r\n";
       http += "Connection: close\r\n";
-      http += "\r\n"; //terminate HTTP header
+      //terminate HTTP header
+      http += "\r\n";
       //add message
       http += message;
     }
