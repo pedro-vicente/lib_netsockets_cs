@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //web_client
@@ -9,14 +11,26 @@ using System.Text;
 
 class web_client
 {
+
+
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //Main
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   static void Main(string[] args)
   {
+    bool secure = true;
+    string uri;
+    if (secure)
+    {
+      ServicePointManager.ServerCertificateValidationCallback = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+      uri = "https://127.0.0.1:8443";
+    }
+    else
+    {
+      uri = "http://127.0.0.1:8000";
+    }
     string message = "test";
-    string uri = "http://127.0.0.1:8000";
     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
     request.KeepAlive = false;
     request.ProtocolVersion = HttpVersion.Version10;

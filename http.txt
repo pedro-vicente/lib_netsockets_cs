@@ -1,1 +1,6 @@
 netsh http add urlacl url=http://+:8000/ user=Everyone
+netsh http add urlacl url=https://+:8443/ user=Everyone
+"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\makecert" -n "CN=vMargeCA" -r -sv vMargeCA.pvk vMargeCA.cer
+"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\makecert" -sk vMargeSignedByCA -iv vMargeCA.pvk -n "CN=vMargeSignedByCA" -ic vMargeCA.cer vMargeSignedByCA.cer -sr localmachine -ss My
+"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\Pvk2Pfx" -pvk vMargeCA.pvk –spc vMargeCA.cer –pfx vMargeCA.pfx –po zappa344 -f
+netsh http add sslcert ipport=0.0.0.0:8443 certhash=c7cf49cc11b0fa68df9c6694b69e21b08bab47a3 appid={5a911b3a-15ec-42a4-890b-1c1ac7710a99}

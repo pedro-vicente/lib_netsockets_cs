@@ -13,17 +13,20 @@ namespace http_listener
     {
       HttpListener listener = new HttpListener();
       listener.Prefixes.Add("http://+:8000/");
+      listener.Prefixes.Add("https://+:8443/");
       listener.Start();
-      Console.WriteLine("Listening in port 8000...");
+      Console.WriteLine("Server listening in http://+:8000, https://+:8443/...");
       HttpListenerContext context = listener.GetContext();
       HttpListenerRequest request = context.Request;
       HttpListenerResponse response = context.Response;
-      string message = "server sent";
+      string message = "message from server";
       byte[] buffer = System.Text.Encoding.UTF8.GetBytes(message);
       response.ContentLength64 = buffer.Length;
       System.IO.Stream output = response.OutputStream;
       output.Write(buffer, 0, buffer.Length);
       output.Close();
+      Console.WriteLine("Server sent:");
+      Console.WriteLine(message);
       listener.Stop();
     }
   }
