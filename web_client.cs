@@ -30,7 +30,7 @@ class web_client
     {
       uri = "http://127.0.0.1:8000";
     }
-    string message = "test";
+    string message = "message_from_client";
     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
     request.KeepAlive = false;
     request.ProtocolVersion = HttpVersion.Version10;
