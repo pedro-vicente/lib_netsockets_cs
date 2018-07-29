@@ -19,7 +19,7 @@ namespace http_listener
       HttpListenerContext context = listener.GetContext();
       HttpListenerRequest request = context.Request;
       HttpListenerResponse response = context.Response;
-      string message = "message from server";
+      string message = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><test>TEST</test>";
       byte[] buffer = System.Text.Encoding.UTF8.GetBytes(message);
       response.ContentLength64 = buffer.Length;
       System.IO.Stream output = response.OutputStream;
