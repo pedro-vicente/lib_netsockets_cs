@@ -25,7 +25,10 @@ namespace http_listener
         str_recv = new StreamReader(context.Request.InputStream).ReadToEnd();
       }
       Console.WriteLine("Server received:");
+      Console.WriteLine(context.Request.Headers.ToString());
       Console.WriteLine(str_recv);
+      File.WriteAllText("http_headers.txt", context.Request.Headers.ToString());
+      File.WriteAllText("http_message.txt", str_recv);
       HttpListenerRequest request = context.Request;
       HttpListenerResponse response = context.Response;
       string message = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><received>";
